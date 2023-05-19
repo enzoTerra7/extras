@@ -1,6 +1,6 @@
 import { prisma } from "@/prisma/lib";
 import { NextRequest, NextResponse } from "next/server";
-import { sign } from 'jsonwebtoken';
+import { createAccessToken } from "@/utils/usualFunction";
 // import cookie from 'cookie'
 
 export async function POST(req: NextRequest) {
@@ -28,28 +28,3 @@ export async function POST(req: NextRequest) {
     })
   }
 }
-
-export const createAccessToken = (user: any) => {
-  return sign(
-    { ...user },
-    process.env.ACCESS_TOKEN_SECRET || 'tokenSecret', {
-    expiresIn: '15m'
-  });
-};
-
-// export const createRefreshToken = (user: any) => {
-//   return sign(
-//     { ...user },
-//     process.env.REFRESH_TOKEN_SECRET || 'refreshTokenSecret', {
-//     expiresIn: "7d"
-//   }
-//   );
-// };
-
-// export const sendRefreshToken = (req: NextRequest, token: string) => {
-//   req.headers.set('Set-Cookie', cookie.serialize('refreshToken', token, {
-//     httpOnly: true,
-//     maxAge: 60 * 60 * 24 * 7,
-//     path: '/'
-//   }))
-// };
