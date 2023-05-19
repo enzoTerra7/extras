@@ -10,15 +10,18 @@ import {
   HomeIcon
 } from '@heroicons/react/solid'
 import { classNames } from '@/utils/usualFunction'
-
-const navigation = [
-  { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: window.location.href.includes('/dashboard') },
-  { name: 'Dados Trabalhistas', href: '/workData', icon: ClockIcon, current: window.location.href.includes('/workData') },
-]
+import { usePathname } from 'next/navigation'
 
 export function Sidebar({ children }: {
   children?: React.ReactNode
 }) {
+
+  const path = usePathname()
+
+  const navigation = [
+    { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: path.includes('/dashboard') },
+    { name: 'Dados Trabalhistas', href: '/workData', icon: ClockIcon, current: path.includes('/workData') },
+  ]
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
