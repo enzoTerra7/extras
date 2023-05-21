@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { redirect } from 'next/navigation';
 
-const token = localStorage.getItem('token')
+const token = typeof window !== 'undefined' && localStorage.getItem('token') || ''
 // process.env.REACT_BASE_URL
 
 const api = axios.create({
@@ -13,7 +13,7 @@ const api = axios.create({
 })
 
 api.interceptors.request.use(async (config: any) => {
-  config.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
+  config.headers['Authorization'] = `Bearer ${ typeof window !== 'undefined' && localStorage.getItem('token') || ''}`
   return config
 })
 

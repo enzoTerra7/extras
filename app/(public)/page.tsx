@@ -25,7 +25,7 @@ export default function Login() {
       const { data } = await axios.post('/api/auth', {
         ...values
       })
-      localStorage.setItem('token', data.body.accessToken)
+      if( typeof window !== 'undefined') localStorage.setItem('token', data.body.accessToken)
       router.push('/dashboard')
     } catch (e: any) {
       console.log(e)
