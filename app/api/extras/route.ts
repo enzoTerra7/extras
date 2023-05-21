@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
   // diasDescontado Int?
   // user           User     @relation(fields: [userId], references: [id])
   // userId         Int
-    })
+  // })
 
   // const user = await prisma.user.update({
   //   where: {
