@@ -9,6 +9,7 @@ interface DialogProps {
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   withoutOutsideClick?: boolean
+  children?: React.ReactNode[] | React.ReactNode
 }
 
 export default function Dialog(props: DialogProps) {
@@ -56,11 +57,17 @@ export default function Dialog(props: DialogProps) {
                   </p>
                 </div>
 
+                {props.children && (
+                  <div className="flex flex-col gap-4 w-full border-t border-solid border-t-gray-300 pt-6">
+                    {props.children}
+                  </div>
+                )}
+
                 <div className="mt-4">
                   <Button
                     {...props.button}
                     onClick={() => {
-                      close()
+                      if(!props.children) close()
                       if(props.button.onClick) props.button.onClick()
                     }}
                   >

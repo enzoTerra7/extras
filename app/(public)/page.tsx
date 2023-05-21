@@ -7,7 +7,7 @@ import { Button } from "@/components/Button";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useUserStore } from "@/Store/user";
+import ToastInstance from "@/lib/toastify";
 
 const schema = yup.object({
   Email: yup.string().email("Formato de email inválido").required("Por favor, preencha este campo."),
@@ -15,10 +15,8 @@ const schema = yup.object({
 }).required()
 
 export default function Login() {
-
-  const setUserInfos = useUserStore(state => state.setUser)
   const router = useRouter()
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
+  const { register, handleSubmit, formState: { errors, isSubmitting }, setError } = useForm({
     resolver: yupResolver(schema)
   });
 
@@ -27,11 +25,14 @@ export default function Login() {
       const { data } = await axios.post('/api/auth', {
         ...values
       })
-      setUserInfos(data.body.user)
       localStorage.setItem('token', data.body.accessToken)
       router.push('/dashboard')
-    } catch (e) {
+    } catch (e: any) {
       console.log(e)
+      ToastInstance.error(e?.response?.data?.message)
+      setError('Senha', {
+        message: e?.response?.data?.message
+      })
     }
   }
 

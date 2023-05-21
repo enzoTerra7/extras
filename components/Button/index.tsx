@@ -18,7 +18,7 @@ export function Button({ className, loading, disabled, type, testId, onClick, ch
   const Comp = asChild ? Slot : 'button'
 
   return (
-    <Comp disabled={loading || disabled} data-testId={testId} onClick={!asChild ? onClick : undefined} className={clsx(`${className || ''} flex items-center w-full text-center justify-center`, {
+    <Comp disabled={loading || disabled} data-testId={testId} onClick={!asChild ? onClick : undefined} className={clsx(`${className || ''} flex items-center gap-3 w-full text-center justify-center`, {
       "bg-gray-300 shadow-sm text-white hover:bg-gray-300 hover:text-white": disabled,
       "bg-blue-600 py-3 px-3 rounded font-semibold text-white text-sans text-sm max-w-xs hover:bg-blue-800 transition-colors focus:ring-2 ring-white": type == undefined,
       "outline-none border border-solid border-gray-300 text-gray-300 bg-white p-4 rounded-md flex items-center gap-3 text-sm hover:bg-gray-100 transition-colors justify-center": type == 'white',

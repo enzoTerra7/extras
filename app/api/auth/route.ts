@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
   } catch (e) {
     console.log(e)
     await prisma.$disconnect()
-    return NextResponse.json({ message: 'Credenciais inválidas.' }, {
+    return NextResponse.json({ message: 'Email e senha inválidas.' }, {
       status: 404
     })
   }

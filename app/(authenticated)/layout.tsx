@@ -4,6 +4,7 @@ import "toastify-js/src/toastify.css"
 import { Inter } from 'next/font/google'
 import { Sidebar } from '@/components/Sidebar'
 import { Navbar } from '@/components/Navbar'
+import { redirect } from 'next/navigation'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -15,9 +16,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
   return (
     <html lang="pt-br">
-      <body className={`bg-sky-100 ${inter.className}`}>
+      <body className={`bg-sky-50 ${inter.className}`}>
         <div className="min-h-full flex flex-col">
           <Sidebar />
           <Navbar />

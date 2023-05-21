@@ -8,7 +8,7 @@ export const createAccessToken = (user: any) => {
   return sign(
     { ...user },
     process.env.ACCESS_TOKEN_SECRET || 'tokenSecret', {
-    expiresIn: '15m'
+    expiresIn: '7d'
   });
 };
 
@@ -16,7 +16,7 @@ export const createRefreshToken = (user: any) => {
   return sign(
     { ...user },
     process.env.REFRESH_TOKEN_SECRET || 'refreshTokenSecret', {
-    expiresIn: "7d"
+    expiresIn: "70d"
   }
   );
 };
@@ -28,3 +28,10 @@ export const createRefreshToken = (user: any) => {
 //     path: '/'
 //   }))
 // };
+
+export function formatCurrency(value: number) {
+  return new Intl.NumberFormat(
+    'pt-br',
+    { style: 'currency', currency: 'BRL' }
+  ).format(value);
+}

@@ -22,8 +22,9 @@ api.interceptors.response.use(
     return response
   },
   function (error) {
-    const err = error.response
-    if ((err.status === 401 && err.config && !err.config.__isRetryRequest) || err.data.error == "jwt expired" || err.statusText == "Unauthorized") {
+    const err = error
+    console.log('erro-interceptor', err)
+    if (err.status === 401) {
       localStorage.removeItem('token')
       redirect('/')
     } else {
