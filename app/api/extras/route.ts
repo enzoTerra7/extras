@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     const horasTotal = (body.horas * 60) + (body.minutos)
 
     await prisma.extras.create({
-      horas: horasTotal
+      horas: horasTotal,
       valor: (valorHora * 60) / horasTotal
   //     horas          Int
   // valor          Int
