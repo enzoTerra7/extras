@@ -7,7 +7,6 @@ import { Button } from "@/components/Button";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import ToastInstance from "@/lib/toastify";
 
 const schema = yup.object({
   Email: yup.string().email("Formato de email inválido").required("Por favor, preencha este campo."),
@@ -29,7 +28,6 @@ export default function Login() {
       router.push('/dashboard')
     } catch (e: any) {
       console.log(e)
-      ToastInstance.error(e?.response?.data?.message)
       setError('Senha', {
         message: e?.response?.data?.message
       })

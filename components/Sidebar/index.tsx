@@ -85,7 +85,7 @@ export function Sidebar({ children }: {
                       href={item.href}
                       className={classNames(
                         item.current ? 'bg-sky-500 text-white' : 'text-gray-800 hover:text-white hover:bg-sky-500',
-                        'group flex items-center py-4 px-3 text-lg font-medium rounded-md'
+                        'group flex items-center transition py-4 px-3 text-lg font-medium rounded-md'
                       )}
                       aria-current={item.current ? 'page' : undefined}
                     >

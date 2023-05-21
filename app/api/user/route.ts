@@ -28,7 +28,11 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({
       message: 'Usuário encontrado com sucesso',
-      user: user
+      user: {
+        ...user,
+        //@ts-expect-error
+        totalHoras: user?.totalHoras == 0 ? 0 : `${Math.floor(user?.totalHoras / 60)}h${user?.totalHoras % 60}m`
+      }
     }, {
       status: 200
     })

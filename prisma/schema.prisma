@@ -11,15 +11,16 @@ datasource db {
 }
 
 model User {
-  id         Int    @id @default(autoincrement())
-  email      String @unique
-  senha      String
-  salario    Int    @default(0)
-  valorHora  Int    @default(0)
-  horasDia   Int    @default(0)
-  diasSemana Int    @default(0)
-  totalGanho Int    @default(0)
-  totalHoras Int    @default(0)
+  id                    Int    @id @default(autoincrement())
+  email                 String @unique
+  senha                 String
+  salario               Int    @default(0)
+  valorHora             Float    @default(0)
+  horasDia              Int    @default(0)
+  diasSemana            Int    @default(0)
+  totalGanho            Float    @default(0)
+  totalHorasDescontadas Int    @default(0)
+  totalHoras            Int    @default(0)
 
   extras Extras[]
 }
@@ -27,10 +28,10 @@ model User {
 model Extras {
   id             Int      @id @default(autoincrement())
   horas          Int
-  valor          Int
+  valor          Float
   descontado     Boolean
   diaReferente   DateTime
-  diasDescontado Int?
+  horasDescontas Int?
   user           User     @relation(fields: [userId], references: [id])
   userId         Int
 }

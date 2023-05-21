@@ -1,6 +1,8 @@
 'use client'
 import Dialog from "@/components/Dialog";
 import { Input } from "@/components/Input";
+import api from "@/lib/api";
+import ToastInstance from "@/lib/toastify";
 import { Transition } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react"
@@ -12,17 +14,35 @@ interface ButtonModalProps {
 }
 
 const schema = yup.object({
-  Horas: yup.number().required("Por favor, preencha este campo.").typeError('Por favor, preencha com um valor válido.'),
-  Minutos: yup.number().required("Por favor, preencha este campo.").typeError('Por favor, preencha com um valor válido.'),
+  Horas: yup.number().required("Por favor, preencha este campo.").max(23, "Informe um valor de no máximo 23").typeError('Por favor, preencha com um valor válido.'),
+  Minutos: yup.number().required("Por favor, preencha este campo.").max(59, "Informe um valor de no máximo 59").typeError('Por favor, preencha com um valor válido.'),
   Dia: yup.date().max(new Date(), "A data não pode ser superior a do dia de hoje").required('Por favor, preencha esse campo').typeError('Por favor, preencha com um valor válido.'),
-  HorasDescontadas: yup.number().required("Por favor, preencha este campo.").typeError('Por favor, preencha com um valor válido.'),
-  MinutosDescontadas: yup.number().required("Por favor, preencha este campo.").typeError('Por favor, preencha com um valor válido.'),
+  HorasDescontadas: yup.number().required("Por favor, preencha este campo.").max(23, "Informe um valor de no máximo 23").typeError('Por favor, preencha com um valor válido.').test(
+    'HorasDescontadas', 
+    'Horas descontadas não podem ser maiores que as horas trabalhadas',
+    function (value) {
+      const { Horas } = this.parent;
+      return value <= Horas;
+    }
+  ),
+  MinutosDescontados: yup.number().required("Por favor, preencha este campo.").max(59, "Informe um valor de no máximo 59").typeError('Por favor, preencha com um valor válido.').test(
+    'MinutosDescontados', 
+    'Os minutos não podem ser maior que os trabalhados',
+    function (value) {
+      const { Horas, Minutos, HorasDescontadas } = this.parent;
+      if(Horas == HorasDescontadas) {
+        return value <= Minutos
+      } else {
+        return true
+      }
+    }
+  )
 
 }).required()
 
 export function ButtonModal(props: ButtonModalProps) {
 
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
+  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       Horas: 0,
@@ -36,17 +56,31 @@ export function ButtonModal(props: ButtonModalProps) {
   const [show, setShow] = useState(false);
   const [descontado, setDescontado] = useState(false);
 
-  const onSubmit = (values: {
+  const onSubmit = async (values: {
     Horas: number;
     Minutos: number;
     Dia: string;
+    HorasDescontadas: number;
+    MinutosDescontados: number;
   }) => {
-    console.log(values)
+    try {
+      const { data } = await api.post('/api/extras', {
+        ...values,
+        Descontado: descontado,
+        HorasDescontadas: descontado ? 0 : values.HorasDescontadas,
+        MinutosDescontados: descontado ? 0 : values.MinutosDescontados
+      })
+      setShow(false)
+      reset()
+      ToastInstance.success("Extra criado com sucesso. Em instantes os dados serão atualizados")
+    } catch(e: any) {
+      ToastInstance.error(e?.response?.data?.message)
+    }
   }
 
   return (
     <>
-      <button className="bg-blue-600 py-3 px-3 rounded font-semibold text-white text-sans text-sm max-w-xs hover:bg-blue-800 transition-colors focus:ring-2 ring-white flex items-center gap-3 w-full text-center justify-center" onClick={() => setShow(true)}>
+      <button className="bg-blue-600 py-3 px-3 rounded font-semibold text-white text-sans text-sm max-w-xs hover:bg-blue-800 transition-colors focus:ring-2 ring-white flex justify-center items-center gap-3 w-full text-center" onClick={() => setShow(true)}>
         {props.children}
       </button>
       <Dialog
@@ -69,7 +103,7 @@ export function ButtonModal(props: ButtonModalProps) {
             input={{
               ...register('Horas'),
               min: 0,
-              max: 24,
+              max: 23,
               placeholder: 'Informe as horas trabalhadas nesse dia'
             }}
             error={!!errors.Horas}
@@ -82,7 +116,7 @@ export function ButtonModal(props: ButtonModalProps) {
             input={{
               ...register('Minutos'),
               min: 0,
-              max: 60,
+              max: 59,
               placeholder: 'Informe os minutos trabalhadas nesse dia'
             }}
             error={!!errors.Minutos}
@@ -134,8 +168,8 @@ export function ButtonModal(props: ButtonModalProps) {
                 max: 24,
                 placeholder: 'Informe as horas descontadas'
               }}
-              error={!!errors.Horas}
-              errorMessage={errors.Horas?.message as string || ''}
+              error={!!errors.HorasDescontadas}
+              errorMessage={errors.HorasDescontadas?.message as string || ''}
             />
             <Input
               label="Minutos"
@@ -147,8 +181,8 @@ export function ButtonModal(props: ButtonModalProps) {
                 max: 60,
                 placeholder: 'Informe os minutos descontados'
               }}
-              error={!!errors.Minutos}
-              errorMessage={errors.Minutos?.message as string || ''}
+              error={!!errors.MinutosDescontados}
+              errorMessage={errors.MinutosDescontados?.message as string || ''}
             />
           </div>
         </Transition>

@@ -47,7 +47,7 @@ export default function Card(props: CardProps) {
           {props.loading ? (
             <Skeleton height={8} width={'40%'} className='ml-16 mb-9' />
           ) : (
-            <dd className="ml-16 pb-6 flex items-baseline sm:pb-7">
+            <dd className="ml-16 pb-6 flex items-baseline sm:pb-6">
               <p
                 className={classNames(
                   item?.change ? item?.change.changeType === 'increase' ?

@@ -22,8 +22,7 @@ api.interceptors.response.use(
     return response
   },
   function (error) {
-    const err = error
-    console.log('erro-interceptor', err)
+    const err = error.response
     if (err.status === 401) {
       localStorage.removeItem('token')
       redirect('/')
