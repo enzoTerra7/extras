@@ -12,7 +12,7 @@ export default function WorkData() {
       <div className="flex w-full flex-col gap-4">
         <Header
           title="Veja todos os seus dados"
-          subtitle="Referente a seus ganhos e horas"
+          subtitle="Referente a horários e valores"
           button={{
             testId: 'lancarHoras',
             asChild: true,
@@ -26,6 +26,10 @@ export default function WorkData() {
         <div className="flex flex-wrap gap-4 items-center w-full mt-2">
           <WorkDataCards />
         </div>
+        <Header
+          title="Resumo de extras"
+          subtitle="Veja o total de seus ganhos e horas"
+        />
         <CardsAnimation />
       </div>
     </>

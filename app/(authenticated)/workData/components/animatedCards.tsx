@@ -1,9 +1,10 @@
-import { motion } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
+import { useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
 type ContainerProps = {
   loading: boolean,
-  type: 'circle' | 'bar',
+  type: 'circle' | 'bar' | 'clock',
   title: String,
   value: String | number
 }
@@ -34,7 +35,7 @@ export function AnimatedCard(props: ContainerProps) {
 }
 
 type AnimatedProps = {
-  type: 'circle' | 'bar'
+  type: 'circle' | 'bar' | 'clock'
 }
 
 const Animated = ({ type }: AnimatedProps) => {
@@ -43,6 +44,18 @@ const Animated = ({ type }: AnimatedProps) => {
     hidden: { pathLength: 0 },
     visible: { pathLength: 1 },
   };
+
+  const hourControl = useAnimation();
+  const minuteControl = useAnimation();
+
+  useEffect(() => {
+    const animateClock = async () => {
+      hourControl.start({ rotate: 185, transition: { duration: 1.25 } });
+      minuteControl.start({ rotate: 45, transition: { duration: 1.25 } });
+    };
+
+    animateClock();
+  }, []);
 
   if (type == 'circle') {
     return (
@@ -62,7 +75,7 @@ const Animated = ({ type }: AnimatedProps) => {
         </svg>
       </div>
     )
-  } else {
+  } else if (type == 'bar') {
     return (
       <div className="w-28 h-28">
         <svg viewBox="0 0 100 100" style={{ width: '100%', height: '100%' }}>
@@ -97,6 +110,50 @@ const Animated = ({ type }: AnimatedProps) => {
             transition={{ duration: 1.25 }}
           />
         </svg>
+      </div>
+    )
+  } else {
+    return (
+      <div className="w-28 h-28 relative">
+        <motion.div
+          className="absolute w-full h-full rounded-full bg-sky-500 border-4 border-gray-300 overflow-hidden"
+          style={{ originX: 'center', originY: 'center' }}
+        >
+          <motion.div
+            style={{
+              width: '2px',
+              height: '30%',
+              background: 'white',
+              position: 'absolute',
+              left: 'calc(50% - 1px)',
+              top: 'calc(50% - 30%)',
+              originX: '50%',
+              originY: '100%',
+              transformOrigin: '50% 100%',
+              rotate: 0,
+              zIndex: 2,
+            }}
+            animate={hourControl}
+            initial={false}
+          />
+          <motion.div
+            style={{
+              width: '2px',
+              height: '40%',
+              background: 'white',
+              position: 'absolute',
+              left: 'calc(50% - 1px)',
+              top: 'calc(50% - 40%)',
+              originX: '50%',
+              originY: '100%',
+              transformOrigin: '50% 100%',
+              rotate: 0,
+              zIndex: 3,
+            }}
+            animate={minuteControl}
+            initial={false}
+          />
+        </motion.div>
       </div>
     )
   }

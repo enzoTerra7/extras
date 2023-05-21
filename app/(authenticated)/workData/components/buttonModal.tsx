@@ -67,8 +67,8 @@ export function ButtonModal(props: ButtonModalProps) {
       const { data } = await api.post('/api/extras', {
         ...values,
         Descontado: descontado,
-        HorasDescontadas: descontado ? 0 : values.HorasDescontadas,
-        MinutosDescontados: descontado ? 0 : values.MinutosDescontados
+        HorasDescontadas: descontado ? values.HorasDescontadas : 0 ,
+        MinutosDescontados: descontado ? values.MinutosDescontados : 0
       })
       setShow(false)
       reset()

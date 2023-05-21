@@ -23,6 +23,12 @@ export function CardsAnimation() {
           value={data?.data?.user?.totalHoras}
           type="bar"
         />
+        <AnimatedCard
+          loading={isLoading}
+          title="Total de horas descontadas"
+          value={data?.data?.user?.totalHorasDescontadas}
+          type="clock"
+        />
       </div>
     </>
   )

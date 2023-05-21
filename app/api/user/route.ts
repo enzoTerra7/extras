@@ -20,7 +20,8 @@ export async function GET(req: NextRequest) {
         horasDia: true,
         salario: true,
         totalGanho: true,
-        totalHoras: true
+        totalHoras: true,
+        totalHorasDescontadas: true
       }
     })
 
@@ -31,7 +32,9 @@ export async function GET(req: NextRequest) {
       user: {
         ...user,
         //@ts-expect-error
-        totalHoras: user?.totalHoras == 0 ? 0 : `${Math.floor(user?.totalHoras / 60)}h${user?.totalHoras % 60}m`
+        totalHoras: user?.totalHoras == 0 ? 0 : `${Math.floor(user?.totalHoras / 60)}h${user?.totalHoras % 60}m`,
+        //@ts-expect-error
+        totalHorasDescontadas: user?.totalHorasDescontadas == 0 ? 0 : `${Math.floor(user?.totalHorasDescontadas / 60)}h${user?.totalHorasDescontadas % 60}m`,
       }
     }, {
       status: 200
