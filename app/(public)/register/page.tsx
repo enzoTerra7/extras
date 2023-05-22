@@ -13,7 +13,7 @@ import ToastInstance from '@/lib/toastify';
 
 const schema = yup.object({
   Email: yup.string().email("Formato de email inválido").required("Por favor, preencha este campo."),
-  Senha: yup.string().required("Por favor, preencha este campo."),
+  Senha: yup.string().required("Por favor, preencha este campo.").matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#()-+.\/])[A-Za-z\d@$!%*?&]+$/, 'A senha deve conter pelo menos 1 letra minúscula, 1 maiúscula, 1 número e 1 simbolo.').min(8, 'A senha deve possuir pelo menos 8 caracteres.').max(16, 'A senha deve possuir no máximo 16 caracteres.'),
   ConfirmarSenha: yup.string().oneOf([yup.ref('Senha')], 'As senhas precisam ser iguais').required("Por favor, preencha este campo."),
   Salario: yup.number().positive('O valor inserido deve ser no mínimo 1').required("Por favor, preencha este campo.").typeError('Por favor, preencha com um valor válido.'),
   HorasDia: yup.number().min(1, 'O valor inserido deve ser no mínimo 1').max(24, 'O valor inserido deve ser no máximo 24').required("Por favor, preencha este campo.").typeError('Por favor, preencha com um número válido.'),
@@ -35,7 +35,7 @@ export default function Register() {
       const { data } = await axios.post('/api/user/register', {
         ...values
       })
-      console.log(data)
+      setOpen(true)
     } catch (e: any) {
       console.log(e)
       ToastInstance.error(e.response.data.message)
