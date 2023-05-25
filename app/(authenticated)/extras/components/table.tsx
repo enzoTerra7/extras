@@ -40,7 +40,7 @@ export function TableExtras() {
           </tr>
         ) : error ? (
           <tr className="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-            <td className="w-full lg:w-auto p-3 text-red-600 text-center border border-b block lg:table-cell relative lg:static">
+            <td className="w-full lg:w-auto p-3 text-red-600 text-center border border-b block lg:table-cell relative lg:static" colSpan={5}>
               Algo deu errado. Tente novamente mais tarde
             </td>
           </tr>
