@@ -15,10 +15,10 @@ model User {
   email                 String @unique
   senha                 String
   salario               Int    @default(0)
-  valorHora             Float    @default(0)
+  valorHora             Float  @default(0)
   horasDia              Int    @default(0)
   diasSemana            Int    @default(0)
-  totalGanho            Float    @default(0)
+  totalGanho            Float  @default(0)
   totalHorasDescontadas Int    @default(0)
   totalHoras            Int    @default(0)
 
@@ -31,6 +31,7 @@ model Extras {
   valor          Float
   descontado     Boolean
   diaReferente   DateTime
+  descricao      String
   horasDescontas Int?
   user           User     @relation(fields: [userId], references: [id])
   userId         Int

@@ -5,7 +5,7 @@ import { CashIcon, ClockIcon, CalendarIcon } from '@heroicons/react/solid';
 import useSWR from 'swr'
 export function WorkDataCards() {
 
-  const { data, error, isLoading } = useSWR<any, any, "/api/user">("/api/user", api)
+  const { data, error, isLoading } = useSWR<any, any, "/api/user">("/api/user", api, { refreshInterval: 5000 })
 
   return (
     <>

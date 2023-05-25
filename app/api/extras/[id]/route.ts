@@ -33,14 +33,51 @@ export async function PUT(req: NextRequest, props: any) {
     })
 
     await prisma.$disconnect()
-    
+
     //@ts-expect-error
     atualizarCamposUsuario(token.id)
-    
+
     await prisma.$disconnect()
 
     return NextResponse.json({
       message: 'Extra atualizado com sucesso'
+      // user: user
+    }, {
+      status: 200
+    })
+  } catch (e: any) {
+    console.log(e)
+    await prisma.$disconnect()
+    return NextResponse.json({ message: "Ocorreu um erro. Tente novamente mais tarde", error: e }, {
+      status: 500
+    })
+  }
+}
+
+export async function DELETE(req: NextRequest, props: any) {
+  try {
+    const token = checkAuth(req)
+    const { id } = props.params
+
+    if (token instanceof NextResponse) {
+      return token;
+    }
+
+    await prisma.extras.delete({
+      where: {
+        id: Number(id)
+      }
+    })
+
+    await prisma.$disconnect()
+
+    //@ts-expect-error
+    atualizarCamposUsuario(token.id)
+
+    await prisma.$disconnect()
+
+    return NextResponse.json({
+      message: 'Extra deletado com sucesso'
       // user: user
     }, {
       status: 200

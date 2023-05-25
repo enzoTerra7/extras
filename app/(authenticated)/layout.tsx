@@ -4,7 +4,6 @@ import "toastify-js/src/toastify.css"
 import { Inter } from 'next/font/google'
 import { Sidebar } from '@/components/Sidebar'
 import { Navbar } from '@/components/Navbar'
-import { redirect } from 'next/navigation'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {

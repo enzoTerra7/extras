@@ -8,6 +8,7 @@ import {
 import {
   ChevronDownIcon,
 } from '@heroicons/react/solid'
+import Link from 'next/link'
 
 export function Navbar() {
   return (
@@ -30,7 +31,7 @@ export function Navbar() {
                 <img
                   className="h-8 w-8 rounded-full"
                   src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  alt=""
+                  alt="Foto de perfil do usuário"
                 />
                 <span className="hidden ml-3 text-gray-700 text-sm font-medium lg:block">
                   <span className="sr-only">Abrir menu do usuário </span>
@@ -53,22 +54,23 @@ export function Navbar() {
               <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <Menu.Item>
                   {({ active }) => (
-                    <a
-                      href="#"
+                    <Link
+                      href="/my-profile"
                       className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                     >
                       Seu perfil
-                    </a>
+                    </Link>
                   )}
                 </Menu.Item>
                 <Menu.Item>
                   {({ active }) => (
-                    <a
-                      href="#"
+                    <Link
+                      href="/"
                       className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                      onClick={() => localStorage.removeItem('token')}
                     >
                       Sair
-                    </a>
+                    </Link>
                   )}
                 </Menu.Item>
               </Menu.Items>

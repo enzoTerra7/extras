@@ -19,6 +19,7 @@ export function ButtonModal(props: ButtonModalProps) {
       <ExtraModal
         show={show}
         setShow={setShow}
+        
       />
     </>
   )

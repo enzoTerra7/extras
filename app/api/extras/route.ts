@@ -23,6 +23,7 @@ export async function POST(req: NextRequest) {
         valor: Number(((valorHora) * ((horasTotal - horasTotalDescontado) / 60)).toFixed(2)),
         descontado: body.Descontado,
         diaReferente: body.Dia,
+        descricao: body.Descricao,
         horasDescontas: horasTotalDescontado,
         //@ts-expect-error
         user: { connect: { id: token.id } }

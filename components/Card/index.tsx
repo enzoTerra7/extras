@@ -27,7 +27,7 @@ export default function Card(props: CardProps) {
       {props.cards.map((item) => (
         <div
           key={item.id}
-          className={`relative min-w-fit flex-1 bg-white pt-5 px-4 sm:pt-6 sm:px-6 shadow rounded-lg overflow-hidden`}
+          className={`relative flex-wrap min-w-fit flex-1 bg-white pt-5 px-4 sm:pt-6 sm:px-6 shadow rounded-lg overflow-hidden`}
         >
           {props.loading ? (
             <dt>

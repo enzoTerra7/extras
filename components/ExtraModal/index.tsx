@@ -8,17 +8,40 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from 'yup'
 import { Dispatch, SetStateAction, useState } from "react"
+import { Textarea } from "../Textarea";
 
 const schema = yup.object({
-  Horas: yup.number().required("Por favor, preencha este campo.").max(23, "Informe um valor de no máximo 23").typeError('Por favor, preencha com um valor válido.'),
-  Minutos: yup.number().required("Por favor, preencha este campo.").max(59, "Informe um valor de no máximo 59").typeError('Por favor, preencha com um valor válido.'),
+  Horas: yup.number().required("Por favor, preencha este campo.").max(23, "Informe um valor de no máximo 23").typeError('Por favor, preencha com um valor válido.').test(
+    'Horas',
+    'Preencha o campo horas ou minutos',
+    function (value) {
+      const { Minutos } = this.parent;
+      return !(Minutos == 0 && value == 0)
+    }
+  ),
+  Minutos: yup.number().required("Por favor, preencha este campo.").max(59, "Informe um valor de no máximo 59").typeError('Por favor, preencha com um valor válido.').test(
+    'Minutos',
+    'Preencha o campo horas ou minutos',
+    function (value) {
+      const { Horas } = this.parent;
+      return !(Horas == 0 && value == 0)
+    }
+  ),
   Dia: yup.date().max(new Date(), "A data não pode ser superior a do dia de hoje").required('Por favor, preencha esse campo').typeError('Por favor, preencha com um valor válido.'),
+  Descricao: yup.string().required("Por favor, preencha este campo."),
   HorasDescontadas: yup.number().required("Por favor, preencha este campo.").max(23, "Informe um valor de no máximo 23").typeError('Por favor, preencha com um valor válido.').test(
     'HorasDescontadas',
     'Horas descontadas não podem ser maiores que as horas trabalhadas',
     function (value) {
       const { Horas } = this.parent;
       return value <= Horas;
+    }
+  ).test(
+    'Horas Descontadas = 0',
+    'Preencha o campo horas ou minutos',
+    function (value) {
+      const { MinutosDescontados } = this.parent;
+      return !(MinutosDescontados == 0 && value == 0)
     }
   ),
   MinutosDescontados: yup.number().required("Por favor, preencha este campo.").max(59, "Informe um valor de no máximo 59").typeError('Por favor, preencha com um valor válido.').test(
@@ -32,6 +55,13 @@ const schema = yup.object({
         return true
       }
     }
+  ).test(
+    'Minutos Descontadas = 0',
+    'Preencha o campo horas ou minutos',
+    function (value) {
+      const { HorasDescontadas } = this.parent;
+      return !(HorasDescontadas == 0 && value == 0)
+    }
   )
 
 }).required()
@@ -43,6 +73,7 @@ interface ExtraModalProps {
   Minutos?: number,
   Dia?: string,
   Descontado?: boolean
+  Descricao?: string
   HorasDescontadas?: number,
   MinutosDescontados?: number,
   id?: number
@@ -56,7 +87,8 @@ export function ExtraModal(props: ExtraModalProps) {
     defaultValues: {
       Horas: props.Horas || 0,
       Minutos: props.Minutos || 0,
-      Dia: props.Dia ||'',
+      Dia: props.Dia || '',
+      Descricao: props.Descricao || '',
       HorasDescontadas: props.HorasDescontadas || 0,
       MinutosDescontados: props.MinutosDescontados || 0,
     }
@@ -72,7 +104,7 @@ export function ExtraModal(props: ExtraModalProps) {
     MinutosDescontados: number;
   }) => {
     try {
-      if(props.id) {
+      if (props.id) {
         const { data } = await api.put(`/api/extras/${props.id}`, {
           ...values,
           Descontado: descontado,
@@ -87,7 +119,7 @@ export function ExtraModal(props: ExtraModalProps) {
           HorasDescontadas: descontado ? values.HorasDescontadas : 0,
           MinutosDescontados: descontado ? values.MinutosDescontados : 0
         })
-        
+
         ToastInstance.success("Extra criado com sucesso. Em instantes os dados serão atualizados")
       }
       props.setShow(false)
@@ -105,6 +137,7 @@ export function ExtraModal(props: ExtraModalProps) {
         loading: isSubmitting,
         onClick: handleSubmit(onSubmit)
       }}
+      disabledAutoClose
       isOpen={props.show}
       setIsOpen={props.setShow}
       title="Lançar horas"
@@ -147,6 +180,16 @@ export function ExtraModal(props: ExtraModalProps) {
         }}
         error={!!errors.Dia}
         errorMessage={errors.Dia?.message as string || ''}
+      />
+      <Textarea
+        label="Descrição"
+        id="dia"
+        textarea={{
+          ...register('Descricao'),
+          placeholder: 'Descreva as tarefas que você fez'
+        }}
+        error={!!errors.Descricao}
+        errorMessage={errors.Descricao?.message as string || ''}
       />
       <div className="flex items-center gap-3">
         <input

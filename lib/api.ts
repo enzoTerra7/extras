@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { redirect } from 'next/navigation';
+import ToastInstance from './toastify'
 
 const token = typeof window !== 'undefined' && localStorage.getItem('token') || ''
 // process.env.REACT_BASE_URL
@@ -24,8 +24,9 @@ api.interceptors.response.use(
   function (error) {
     const err = error.response
     if (err.status === 401) {
+      window.location.replace('/')
       localStorage.removeItem('token')
-      redirect('/')
+      // redirect('/')
     } else {
       return Promise.reject(error)
     }

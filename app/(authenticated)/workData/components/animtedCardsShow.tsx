@@ -6,7 +6,7 @@ import { formatCurrency } from "@/utils/usualFunction";
 
 export function CardsAnimation() {
   
-  const { data, error, isLoading } = useSWR<any, any, "/api/user">("/api/user", api)
+  const { data, error, isLoading } = useSWR<any, any, "/api/user">("/api/user", api, { refreshInterval: 5000 })
 
   return (
     <>

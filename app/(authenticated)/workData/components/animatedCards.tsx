@@ -11,7 +11,7 @@ type ContainerProps = {
 
 export function AnimatedCard(props: ContainerProps) {
   return (
-    <div className="flex-1 p-6 min-w-fit rounded-lg bg-white flex items-center gap-4 shadow">
+    <div className="flex-1 flex-wrap p-6 min-w-fit rounded-lg bg-white flex items-center gap-4 shadow">
       {props.loading ? <>
         <Skeleton height={48} width={48} />
         <div className="flex gap-4 flex-col flex-1">

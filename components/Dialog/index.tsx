@@ -1,6 +1,7 @@
 import { Dialog as Modal, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import { Button, ButtonProps } from '../Button'
+import clsx from 'clsx'
 
 interface DialogProps {
   title: String
@@ -9,7 +10,11 @@ interface DialogProps {
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   withoutOutsideClick?: boolean
+  secondButton?: ButtonProps
   children?: React.ReactNode[] | React.ReactNode
+  icon?: React.ReactElement
+  error?: boolean
+  disabledAutoClose?: boolean
 }
 
 export default function Dialog(props: DialogProps) {
@@ -45,6 +50,13 @@ export default function Dialog(props: DialogProps) {
               leaveTo="opacity-0 scale-95"
             >
               <Modal.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all flex items-center flex-col gap-4">
+                {props.icon && (
+                  <div className={clsx('flex items-center p-4 rounded-full bg-sky-600 text-white', {
+                    'bg-red-600': props.error
+                  })}>
+                    {props.icon}
+                  </div>
+                )}
                 <Modal.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
@@ -63,16 +75,27 @@ export default function Dialog(props: DialogProps) {
                   </div>
                 )}
 
-                <div className="mt-4">
+                <div className="mt-4 flex items-center gap-4">
                   <Button
                     {...props.button}
                     onClick={() => {
-                      if(!props.children) close()
-                      if(props.button.onClick) props.button.onClick()
+                      if (!props.disabledAutoClose) close()
+                      if (props.button.onClick) props.button.onClick()
                     }}
                   >
                     {props.button.children}
                   </Button>
+                  {props.secondButton && (
+                    <Button
+                      {...props.secondButton}
+                      onClick={() => {
+                        if (!props.disabledAutoClose) close()
+                        if (props?.secondButton?.onClick) props.secondButton.onClick()
+                      }}
+                    >
+                      {props.secondButton.children}
+                    </Button>
+                  )}
                 </div>
               </Modal.Panel>
             </Transition.Child>
