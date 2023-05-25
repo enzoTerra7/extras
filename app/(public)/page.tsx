@@ -7,6 +7,7 @@ import { Button } from "@/components/Button";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import ToastInstance from "@/lib/toastify";
 
 const schema = yup.object({
   Email: yup.string().email("Formato de email inválido").required("Por favor, preencha este campo."),
@@ -24,6 +25,7 @@ export default function Login() {
       const { data } = await axios.post('/api/auth', {
         ...values
       })
+      ToastInstance.success('Login feito com sucesso! Estamos te redirecionando.')
       if( typeof window !== 'undefined') localStorage.setItem('token', data.body.accessToken)
       router.push('/dashboard')
     } catch (e: any) {

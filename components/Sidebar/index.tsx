@@ -7,6 +7,7 @@ import {
   XIcon,
 } from '@heroicons/react/outline'
 import {
+  CashIcon,
   HomeIcon
 } from '@heroicons/react/solid'
 import { classNames } from '@/utils/usualFunction'
@@ -21,6 +22,7 @@ export function Sidebar({ children }: {
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: path.includes('/dashboard') },
     { name: 'Dados Trabalhistas', href: '/workData', icon: ClockIcon, current: path.includes('/workData') },
+    { name: 'Seus Extras', href: '/extras', icon: CashIcon, current: path.includes('/extras') },
   ]
 
   const [sidebarOpen, setSidebarOpen] = useState(false)

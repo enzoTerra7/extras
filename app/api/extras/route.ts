@@ -51,7 +51,40 @@ export async function POST(req: NextRequest) {
   }
 }
 
-async function atualizarCamposUsuario(userId: number) {
+export async function GET(req: NextRequest) {
+  try {
+    const token = checkAuth(req)
+
+    if (token instanceof NextResponse) {
+      return token;
+    }
+
+    const extras = await prisma.extras.findMany({
+      where: {
+        //@ts-expect-error
+        userId: token?.id
+      }
+    })
+
+    await prisma.$disconnect()
+    
+
+    return NextResponse.json({
+      message: 'Extra encontrados com sucesso',
+      extras: extras
+    }, {
+      status: 200
+    })
+  } catch (e: any) {
+    console.log(e)
+    await prisma.$disconnect()
+    return NextResponse.json({ message: "Ocorreu um erro. Tente novamente mais tarde", error: e }, {
+      status: 500
+    })
+  }
+}
+
+export async function atualizarCamposUsuario(userId: number) {
   const extras = await prisma.extras.findMany({ where: { userId } });
 
   const totalGanho = extras.reduce((total, extra) => total + extra.valor, 0);
