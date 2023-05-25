@@ -20,10 +20,10 @@ export function Button({ className, loading, disabled, type, testId, onClick, ch
   return (
     <Comp disabled={loading || disabled} data-testId={testId} onClick={!asChild ? onClick : undefined} className={clsx(`${className || ''} flex items-center gap-3 w-full text-center justify-center`, {
       "bg-gray-300 shadow-sm text-white hover:bg-gray-300 hover:text-white": disabled,
-      "bg-sky-700 py-3 px-3 rounded font-semibold text-white text-sans text-sm max-w-xs hover:bg-blue-800 transition-colors focus:ring-2 ring-white": type == undefined,
+      "bg-sky-600 py-3 px-3 rounded font-semibold text-white text-sans text-sm max-w-xs hover:bg-sky-700 transition-colors focus:ring-2 ring-white": type == undefined,
       "bg-red-500 text-white hover:bg-red-700 transition-colors py-3 px-3 rounded font-semibold text-sm max-w-xs focus:ring-2 ring-red": type == 'error',
       "outline-none border border-solid border-gray-300 text-gray-300 bg-white p-4 rounded-md flex items-center gap-3 text-sm hover:bg-gray-100 transition-colors justify-center": type == 'white',
-      "outline-none border border-solid font-semibold text-white bg-sky-700 p-4 rounded-md flex items-center gap-3 text-sm focus:ring-2 ring-white hover:bg-blue-800 transition-colors": type == 'primary',
+      "outline-none border border-solid font-semibold text-white bg-sky-600 p-4 rounded-md flex items-center gap-3 text-sm focus:ring-2 ring-white hover:bg-sky-700 transition-colors": type == 'primary',
     })}>
       {loading ? (
         <svg aria-hidden="true" role="status" className="inline w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
