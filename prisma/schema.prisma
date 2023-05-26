@@ -14,6 +14,8 @@ model User {
   id                    Int    @id @default(autoincrement())
   email                 String @unique
   senha                 String
+  nome                  String @default("")
+  imagem                  String @default("")
   salario               Int    @default(0)
   valorHora             Float  @default(0)
   horasDia              Int    @default(0)

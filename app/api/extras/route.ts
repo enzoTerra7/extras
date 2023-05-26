@@ -11,8 +11,25 @@ export async function POST(req: NextRequest) {
       return token;
     }
 
-    //@ts-expect-error
-    const { valorHora } = token
+    const user = await prisma.user.findUnique({
+      where: {
+        //@ts-expect-error
+        id: token.id
+      }, 
+      select: {
+        valorHora: true
+      }
+    })
+    
+    await prisma.$disconnect()
+
+    if(user == null) {
+      return NextResponse.json({ message: "Usuário não encontrado" }, {
+        status: 400
+      })
+    }
+
+    const valorHora = user.valorHora
 
     const horasTotal = (body.Horas * 60) + (body.Minutos)
     const horasTotalDescontado = (body.HorasDescontadas * 60) + (body.MinutosDescontados)
@@ -31,10 +48,10 @@ export async function POST(req: NextRequest) {
     })
 
     await prisma.$disconnect()
-    
+
     //@ts-expect-error
     atualizarCamposUsuario(token.id)
-    
+
     await prisma.$disconnect()
 
     return NextResponse.json({
@@ -68,7 +85,7 @@ export async function GET(req: NextRequest) {
     })
 
     await prisma.$disconnect()
-    
+
 
     return NextResponse.json({
       message: 'Extra encontrados com sucesso',

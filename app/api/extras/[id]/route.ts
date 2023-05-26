@@ -13,8 +13,25 @@ export async function PUT(req: NextRequest, props: any) {
       return token;
     }
 
-    //@ts-expect-error
-    const { valorHora } = token
+    const user = await prisma.user.findUnique({
+      where: {
+        //@ts-expect-error
+        id: token.id
+      }, 
+      select: {
+        valorHora: true
+      }
+    })
+    
+    await prisma.$disconnect()
+
+    if(user == null) {
+      return NextResponse.json({ message: "Usuário não encontrado" }, {
+        status: 400
+      })
+    }
+
+    const valorHora = user.valorHora
 
     const horasTotal = (body.Horas * 60) + (body.Minutos)
     const horasTotalDescontado = (body.HorasDescontadas * 60) + (body.MinutosDescontados)

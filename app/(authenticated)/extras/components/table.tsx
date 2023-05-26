@@ -4,7 +4,7 @@ import { ExtraModal } from '@/components/ExtraModal'
 import api from '@/lib/api'
 import ToastInstance from '@/lib/toastify'
 import { formatCurrency } from '@/utils/usualFunction'
-import { ArchiveIcon, PencilIcon, TrashIcon } from '@heroicons/react/solid'
+import { PencilIcon, TrashIcon, XCircleIcon } from '@heroicons/react/solid'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
@@ -115,7 +115,7 @@ export function TableExtras() {
                   setDataEdit(e)
                   setShowDelete(true)
                 }} className='text-sky-400 hover:text-sky-500 transition-colors cursor-pointer'>
-                  <ArchiveIcon className='w-6 h-6' />
+                  <XCircleIcon className='w-6 h-6' />
                 </span>
               </div>
             </td>

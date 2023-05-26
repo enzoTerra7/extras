@@ -14,6 +14,7 @@ import ToastInstance from '@/lib/toastify';
 const schema = yup.object({
   Email: yup.string().email("Formato de email inválido").required("Por favor, preencha este campo."),
   Senha: yup.string().required("Por favor, preencha este campo.").matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#()-+.\/])[A-Za-z\d@$!%*?&]+$/, 'A senha deve conter pelo menos 1 letra minúscula, 1 maiúscula, 1 número e 1 simbolo.').min(8, 'A senha deve possuir pelo menos 8 caracteres.').max(16, 'A senha deve possuir no máximo 16 caracteres.'),
+  Nome: yup.string().required("Por favor, preencha este campo").matches(/^(?=(?:.*[a-zA-ZÀ-ÖØ-öø-ÿ]){5})[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/, "O nome deve possuir pelo menos 5 letras. E não pode conter números ou símbolos."),
   ConfirmarSenha: yup.string().oneOf([yup.ref('Senha')], 'As senhas precisam ser iguais').required("Por favor, preencha este campo."),
   Salario: yup.number().positive('O valor inserido deve ser no mínimo 1').required("Por favor, preencha este campo.").typeError('Por favor, preencha com um valor válido.'),
   HorasDia: yup.number().min(1, 'O valor inserido deve ser no mínimo 1').max(24, 'O valor inserido deve ser no máximo 24').required("Por favor, preencha este campo.").typeError('Por favor, preencha com um número válido.'),
@@ -57,6 +58,16 @@ export default function Register() {
         }}
         error={!!errors.Email}
         errorMessage={errors.Email?.message as string || ''}
+      />
+      <Input
+        id="Nome"
+        label="Nome"
+        input={{
+          placeholder: "Insira seu nome completo",
+          ...register('Nome')
+        }}
+        error={!!errors.Nome}
+        errorMessage={errors.Nome?.message as string || ''}
       />
       <div className="grid gap-4 grid-cols-2 w-full">
         <Input

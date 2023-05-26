@@ -49,7 +49,7 @@ export const Input = (props: InputProps) => {
       )}
       <label
         className={`
-          mt-1 flex items-center h-6 gap-3 py-4 px-3 border border-solid ${props.error ? 'border-red-500' : 'border-gray-300'} rounded-lg bg-white text-gray-100 text-xs placeholder:text-gray-400 focus-within:border-0 focus-within:ring-2 ring-blue-500 transition ${props.className}
+          mt-1 flex items-center h-6 gap-3 py-4 px-3 border border-solid ${props.error ? 'border-red-500' : 'border-gray-300'} rounded-lg text-gray-100 text-xs placeholder:text-gray-400 focus-within:border-0 focus-within:ring-2 ring-blue-500 transition ${props.className || ''} ${props.input?.disabled && 'bg-gray-100' || 'bg-white'}
         `}
       >
         {props.leftIcon && (

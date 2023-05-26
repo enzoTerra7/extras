@@ -9,6 +9,7 @@ export async function POST(req: NextRequest) {
       data: {
         email: body.Email,
         senha: body.Senha,
+        nome: body.Nome,
         salario: body.Salario,
         horasDia: body.HorasDia,
         diasSemana: body.DiasSemana,

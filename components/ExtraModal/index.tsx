@@ -82,7 +82,7 @@ interface ExtraModalProps {
 
 export function ExtraModal(props: ExtraModalProps) {
 
-  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm({
+  const { register, handleSubmit, formState: { errors, isSubmitting }, reset, setValue } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       Horas: props.Horas || 0,
@@ -90,7 +90,7 @@ export function ExtraModal(props: ExtraModalProps) {
       Dia: props.Dia || '',
       Descricao: props.Descricao || '',
       HorasDescontadas: props.HorasDescontadas || 0,
-      MinutosDescontados: props.MinutosDescontados || 0,
+      MinutosDescontados: props.MinutosDescontados || 1,
     }
   });
 
@@ -197,7 +197,14 @@ export function ExtraModal(props: ExtraModalProps) {
           type="checkbox"
           className="w-6 h-6 rounded cursor-pointer"
           checked={descontado}
-          onChange={() => setDescontado(!descontado)}
+          onChange={() => {
+            setDescontado(!descontado)
+            if(!descontado == true) {
+              setValue('MinutosDescontados', 0)
+            } else {
+              setValue('MinutosDescontados', 1)
+            }
+          }}
         />
         <label
           htmlFor="descontado"
