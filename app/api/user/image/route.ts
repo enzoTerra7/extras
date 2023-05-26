@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
   try {
     const token = checkAuth(req)
 
-    if(token instanceof NextResponse) {
+    if (token instanceof NextResponse) {
       return token;
     }
 
@@ -21,6 +21,14 @@ export async function GET(req: NextRequest) {
     })
 
     await prisma.$disconnect()
+
+    if (user == null) {
+      return NextResponse.json({
+        message: 'Usuário não encontrado.'
+      }, {
+        status: 400
+      })
+    }
 
     return NextResponse.json({
       message: 'Imagem encontrada com sucesso',
@@ -41,7 +49,7 @@ export async function PUT(req: NextRequest) {
   try {
     const token = checkAuth(req)
 
-    if(token instanceof NextResponse) {
+    if (token instanceof NextResponse) {
       return token;
     }
 
@@ -58,9 +66,9 @@ export async function PUT(req: NextRequest) {
     await prisma.$disconnect()
 
     return NextResponse.json({ message: 'Imagem atualizada com sucesso', body: { user: data } })
-  } catch(e: any) {
+  } catch (e: any) {
     await prisma.$disconnect()
-    return NextResponse.json({ message: "Ocorreu um erro. Tente novamente mais tarde", error: e}, {
+    return NextResponse.json({ message: "Ocorreu um erro. Tente novamente mais tarde", error: e }, {
       status: 500
     })
   }
