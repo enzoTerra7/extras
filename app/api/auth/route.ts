@@ -10,7 +10,14 @@ export async function POST(req: NextRequest) {
     const data = await prisma.user.findUnique({
       where: {
         email: body.Email
-      }
+      },
+      select: {
+        email: true,
+        id: true,
+        nome: true,
+        salario: true,
+        senha: true,
+      },
     })
     if (!data || !(data.senha == body.Senha)) {
       throw new Error()
