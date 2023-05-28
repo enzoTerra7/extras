@@ -15,7 +15,7 @@ model User {
   email                 String @unique
   senha                 String
   nome                  String @default("")
-  imagem                  String @default("")
+  imagem                String @default("")
   salario               Int    @default(0)
   valorHora             Float  @default(0)
   horasDia              Int    @default(0)

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
 type ContainerProps = {
-  loading: boolean,
+  loading?: boolean,
   type: 'circle' | 'bar' | 'clock',
   title: String,
   value: String | number

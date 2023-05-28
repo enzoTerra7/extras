@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     const user = await prisma.user.findUnique({
       where: {
         //@ts-expect-error
-        id: token.id
+        id: token.id,
       }, 
       select: {
         valorHora: true
@@ -81,7 +81,7 @@ export async function GET(req: NextRequest) {
       where: {
         //@ts-expect-error
         userId: token?.id
-      }
+      },
     })
 
     await prisma.$disconnect()

@@ -71,40 +71,40 @@ export function TableExtras() {
             </td>
           </tr>
         ) : data.data.extras.map((e: any, index: number) => (
-          <tr key={index} className="bg-white lg:hover:bg-gray-100 transition-colors flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-            <td className="w-full lg:max-w-[200px] lg:w-auto p-3 text-xs font-semibold text-gray-600 text-center border border-b block lg:table-cell relative lg:static">
-              <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Descrição</span>
-              <div className="mt-4 lg:mt-0">
+          <tr key={index} className="lg:bg-white lg:hover:bg-gray-100 transition-colors flex lg:table-row flex-column lg:flex-row flex-wrap lg:flex-no-wrap mb-10 gap-0 lg:mb-0">
+            <td className="w-full shadow rounded-lg lg:shadow-none lg:rounded-none lg:max-w-[200px] lg:w-auto text-xs font-semibold text-gray-600 text-center lg:border lg:border-b flex items-center lg:table-cell relative lg:static">
+              <span className="lg:hidden rounded-s-lg min-w-[130px] max-w-[130px] h-full bg-blue-200 p-4 flex items-center justify-center text-xs font-bold uppercase">Descrição</span>
+              <div className="w-full rounded-e-lg bg-white lg:bg-transparent flex p-4 justify-center h-full">
                 {e.descricao}
               </div>
             </td>
-            <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
-              <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Dia</span>
-              <div className="mt-4 lg:mt-0">
+            <td className="w-full shadow rounded-lg lg:shadow-none lg:rounded-none lg:w-auto text-gray-800 text-center lg:border lg:border-b flex justify-stretch items-center lg:table-cell relative lg:static">
+              <span className="lg:hidden rounded-s-lg min-w-[130px] max-w-[130px] h-full bg-blue-200 p-4 flex items-center justify-center text-xs font-bold uppercase">Dia</span>
+              <div className="w-full rounded-e-lg bg-white lg:bg-transparent flex p-4 justify-center h-full">
                 {e.diaReferente.substring(0, 10).split('-').reverse().join('/')}
               </div>
             </td>
-            <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
-              <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Horas totais</span>
-              <div className="mt-4 lg:mt-0">
+            <td className="w-full shadow rounded-lg lg:shadow-none lg:rounded-none lg:w-auto text-gray-800 lg:border lg:border-b text-center flex justify-stretch items-center lg:table-cell relative lg:static">
+              <span className="lg:hidden rounded-s-lg min-w-[130px] max-w-[130px] h-full bg-blue-200 p-4 flex items-center justify-center text-xs font-bold uppercase">Horas totais</span>
+              <div className="w-full rounded-e-lg bg-white lg:bg-transparent flex p-4 justify-center h-full">
                 {`${Math.floor(e?.horas / 60)}h${e?.horas % 60}m`}
               </div>
             </td>
-            <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
-              <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Valor recebido</span>
-              <div className="mt-4 lg:mt-0">
+            <td className="w-full shadow rounded-lg lg:shadow-none lg:rounded-none lg:w-auto text-gray-800 lg:border lg:border-b text-center flex justify-stretch items-center lg:table-cell relative lg:static">
+              <span className="lg:hidden rounded-s-lg min-w-[130px] max-w-[130px] h-full bg-blue-200 p-4 flex items-center justify-center text-xs font-bold uppercase">Valor recebido</span>
+              <div className="w-full rounded-e-lg bg-white lg:bg-transparent flex p-4 justify-center h-full">
                 <span className="rounded text-green-600 py-1 px-3 text-xs font-bold">{formatCurrency(e?.valor)}</span>
               </div>
             </td>
-            <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
-              <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Descontado</span>
-              <div className="mt-4 lg:mt-0">
+            <td className="w-full shadow rounded-lg lg:shadow-none lg:rounded-none lg:w-auto text-gray-800 lg:border lg:border-b text-center flex justify-stretch items-center lg:table-cell relative lg:static">
+              <span className="lg:hidden rounded-s-lg min-w-[130px] max-w-[130px] h-full bg-blue-200 p-4 flex items-center justify-center text-xs font-bold uppercase">Descontado</span>
+              <div className="w-full rounded-e-lg bg-white lg:bg-transparent flex p-4 justify-center h-full">
                 <span className="rounded py-1 px-3 text-xs font-bold">{(!e?.descontado) ? 'Não descontou' : `${Math.floor(e?.horasDescontas / 60)}h${e?.horasDescontas % 60}m`}</span>
               </div>
             </td>
-            <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
-              <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Ações</span>
-              <div className="w-full mt-4 lg:mt-0 flex items-center justify-center gap-4">
+            <td className="w-full shadow rounded-lg lg:shadow-none lg:rounded-none lg:w-auto text-gray-800 lg:border lg:border-b text-center flex justify-stretch items-center lg:table-cell relative lg:static">
+              <span className="lg:hidden rounded-s-lg min-w-[130px] max-w-[130px] h-full bg-blue-200 p-4 flex items-center justify-center text-xs font-bold uppercase">Ações</span>
+              <div className="w-full rounded-e-lg bg-white lg:bg-transparent p-4 h-full flex items-center justify-center gap-4">
                 <span onClick={() => {
                   setDataEdit(e)
                   setShow(true)
