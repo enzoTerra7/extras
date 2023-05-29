@@ -1,7 +1,8 @@
 'use client'
 import Card from "@/components/Card";
 import api from "@/lib/api";
-import { CashIcon, ClockIcon, CalendarIcon } from '@heroicons/react/solid';
+import { formatCurrency } from "@/utils/usualFunction";
+import { CashIcon, ClockIcon, CalendarIcon, CurrencyDollarIcon } from '@heroicons/react/solid';
 import useSWR from 'swr'
 export function WorkDataCards() {
 
@@ -17,6 +18,12 @@ export function WorkDataCards() {
             id: 1,
             name: 'Seu salário',
             stat: `R$${data?.data?.user?.salario}`
+          },
+          {
+            icon: <CurrencyDollarIcon className="w-6 h-6 text-white" />,
+            id: 1,
+            name: 'Valor da sua hora extra',
+            stat: formatCurrency(Number(data.data.user.valorHora) * 1.8 || 0)
           },
           {
             icon: <ClockIcon className="w-6 h-6 text-white" />,
