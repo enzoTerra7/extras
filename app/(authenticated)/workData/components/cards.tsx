@@ -17,7 +17,7 @@ export function WorkDataCards() {
             icon: <CashIcon className="w-6 h-6 text-white" />,
             id: 1,
             name: 'Seu salário',
-            stat: `R$${data?.data?.user?.salario}`
+            stat: formatCurrency(Number(data?.data?.user?.salario || 0))
           },
           {
             icon: <CurrencyDollarIcon className="w-6 h-6 text-white" />,

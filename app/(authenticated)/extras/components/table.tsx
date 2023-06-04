@@ -93,7 +93,7 @@ export function TableExtras() {
             <td className="w-full shadow rounded-lg lg:shadow-none lg:rounded-none lg:w-auto text-gray-800 lg:border lg:border-b text-center flex justify-stretch items-center lg:table-cell relative lg:static">
               <span className="lg:hidden rounded-s-lg min-w-[130px] max-w-[130px] h-full bg-blue-200 p-4 flex items-center justify-center text-xs font-bold uppercase">Valor recebido</span>
               <div className="w-full rounded-e-lg bg-white lg:bg-transparent flex p-4 justify-center h-full">
-                <span className="rounded text-green-600 py-1 px-3 text-xs font-bold">{formatCurrency(e?.valor)}</span>
+                <span className="rounded text-green-600 py-1 px-3 text-xs font-bold">{formatCurrency(e?.valor * 1.8)}</span>
               </div>
             </td>
             <td className="w-full shadow rounded-lg lg:shadow-none lg:rounded-none lg:w-auto text-gray-800 lg:border lg:border-b text-center flex justify-stretch items-center lg:table-cell relative lg:static">

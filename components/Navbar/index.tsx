@@ -9,7 +9,7 @@ import Link from 'next/link'
 import useSWR from 'swr';
 import api from '@/lib/api'
 
-export function Navbar() {
+export default function Navbar() {
 
   const { data, isLoading } = useSWR<any, any, "/api/user/image">("/api/user/image", api, { refreshInterval: 20000 })
 

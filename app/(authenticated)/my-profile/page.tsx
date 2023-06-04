@@ -159,7 +159,7 @@ export default function MyProfile() {
                 </Button>
               </Transition>
             </div>
-            <div className="flex flex-1 p-4 gap-4 flex-col transition-shadow duration-300 hover:rounded-lg hover:shadow-lg hover:border-gray-50 hover:border w-[280px] md:w-[unset]">
+            <div className="flex flex-1 p-4 gap-4 flex-col transition-shadow duration-300 hover:rounded-lg hover:border-gray-50 hover:border w-[280px] md:w-[unset]">
               <Header
                 title={data.data.user.nome}
                 subtitle='Confira e edite seus dados'
@@ -234,7 +234,7 @@ export default function MyProfile() {
               </div>
             </div>
             <div className="hidden w-full md:flex flex-wrap items-center gap-4">
-              <div className="flex flex- items-center p-4 flex-col gap-4 transition-shadow duration-300 rounded-lg hover:shadow-lg border-gray-150 border min-w-[260px] flex-1">
+              <div className="flex flex- items-center p-4 flex-col gap-4 transition-shadow duration-300 rounded-lg border-gray-150 border min-w-[260px] flex-1">
                 <h4 className="text-sky-950 font-semibold text-lg">
                   Valor da sua hora
                 </h4>

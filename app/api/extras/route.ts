@@ -34,10 +34,10 @@ export async function POST(req: NextRequest) {
     const horasTotal = (body.Horas * 60) + (body.Minutos)
     const horasTotalDescontado = (body.HorasDescontadas * 60) + (body.MinutosDescontados)
 
-    await prisma.extras.create({
+    const extra = await prisma.extras.create({
       data: {
         horas: horasTotal,
-        valor: Number(((valorHora) * ((horasTotal - horasTotalDescontado) / 60)).toFixed(2)),
+        valor: Number(((valorHora * 1.8) * ((horasTotal - horasTotalDescontado) / 60)).toFixed(2)),
         descontado: body.Descontado,
         diaReferente: body.Dia,
         descricao: body.Descricao,
@@ -55,8 +55,8 @@ export async function POST(req: NextRequest) {
     await prisma.$disconnect()
 
     return NextResponse.json({
-      message: 'Extra criado com sucesso'
-      // user: user
+      message: 'Extra criado com sucesso',
+      extra: extra
     }, {
       status: 200
     })

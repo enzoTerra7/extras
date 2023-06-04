@@ -1,14 +1,17 @@
+import bcrypt from 'bcryptjs';
 import { prisma } from "@/prisma/lib";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
 
+  const hashedPassword = await bcrypt.hash(body.Senha, 10); 
+
   try {
     const data = await prisma.user.create({
       data: {
         email: body.Email,
-        senha: body.Senha,
+        senha: hashedPassword,
         nome: body.Nome,
         salario: body.Salario,
         horasDia: body.HorasDia,
@@ -16,8 +19,6 @@ export async function POST(req: NextRequest) {
         valorHora: body.Salario / ((body.HorasDia * body.DiasSemana) * 5)
       }
     })
-
-    console.log(data)
 
     await prisma.$disconnect()
 
@@ -32,7 +33,7 @@ export async function POST(req: NextRequest) {
     await prisma.$disconnect()
     if(e.meta.target.includes("email")) {
       return NextResponse.json({ message: "O email já foi utilizado"}, {
-        status: 500
+        status: 404
       })
     }
     return NextResponse.json({ message: "Ocorreu um erro. Tente novamente mais tarde", error: e}, {

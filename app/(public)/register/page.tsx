@@ -13,7 +13,7 @@ import ToastInstance from '@/lib/toastify';
 
 const schema = yup.object({
   Email: yup.string().email("Formato de email inválido").required("Por favor, preencha este campo."),
-  Senha: yup.string().required("Por favor, preencha este campo.").matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#()-+.\/])[A-Za-z\d@$!%*?&]+$/, 'A senha deve conter pelo menos 1 letra minúscula, 1 maiúscula, 1 número e 1 simbolo.').min(8, 'A senha deve possuir pelo menos 8 caracteres.').max(16, 'A senha deve possuir no máximo 16 caracteres.'),
+  Senha: yup.string().required("Por favor, preencha este campo.").matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#()-+.\/])[A-Za-z\d@$!%*?&]+$/, 'A senha deve conter pelo menos 1 letra minúscula, 1 maiúscula, 1 número e 1 simbolo.').min(8, 'A senha deve possuir pelo menos 8 caracteres.').max(30, 'A senha deve possuir no máximo 30 caracteres.'),
   Nome: yup.string().required("Por favor, preencha este campo").matches(/^(?=(?:.*[a-zA-ZÀ-ÖØ-öø-ÿ]){5})[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/, "O nome deve possuir pelo menos 5 letras. E não pode conter números ou símbolos."),
   ConfirmarSenha: yup.string().oneOf([yup.ref('Senha')], 'As senhas precisam ser iguais').required("Por favor, preencha este campo."),
   Salario: yup.number().positive('O valor inserido deve ser no mínimo 1').required("Por favor, preencha este campo.").typeError('Por favor, preencha com um valor válido.'),
@@ -25,7 +25,7 @@ const schema = yup.object({
 export default function Register() {
 
   const router = useRouter()
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     resolver: yupResolver(schema)
   });
 
@@ -138,6 +138,7 @@ export default function Register() {
         testId="Cadastrar"
         className="mt-6"
         onClick={handleSubmit(onSubmit)}
+        loading={isSubmitting}
       >
         Criar conta
       </Button>

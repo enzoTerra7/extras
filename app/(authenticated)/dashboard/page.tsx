@@ -4,22 +4,7 @@ import { AnimatedCard } from "../workData/components/animatedCards"
 import api from '@/lib/api'
 import { formatCurrency } from '@/utils/usualFunction'
 import { Header } from '@/components/Heading'
-import { BarChart, Bar, XAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
-function CustomTooltip({ payload, label, active }: any) {
-  if (active) {
-    return (
-      <div className="bg-white shadow-lg border border-gray-200 p-3 rounded">
-        <p className="font-bold text-sky-950">{`Dia ${label}`}</p>
-        <p className="">
-        {payload[0].value == 0 ? '0h' : `${Math.floor(payload[0].value / 60)}h${payload[0].value % 60}m`}
-        </p>
-      </div>
-    );
-  }
-
-  return null;
-}
+import { ResponsiveBar } from '@nivo/bar'
 
 export default function Dashboard() {
 
@@ -63,27 +48,103 @@ export default function Dashboard() {
               title='Veja em quais dias você fez seus extras!'
               subtitle='E analise quanto você tem trabalhado'
             />
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  width={500}
-                  height={300}
-                  data={data.data.dados.grafico}
-                  margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="1 1" />
-                  <XAxis dataKey="dia" />
-                  {/* <YAxis label={'Tempo em minutos'}/> */}
-                  <Tooltip content={<CustomTooltip />}/>
-                  <Legend />
-                  <Bar dataKey="horas" fill="#0ea5e9" />
-                </BarChart>
-              </ResponsiveContainer>
+            <h4 className='text-center font-extrabold text-xl text-sky-700 xl:hidden'>
+              Acesse em uma tela maior para ter acesso gráfico!
+            </h4>
+            <div className="hidden xl:flex h-80 w-full">
+              <ResponsiveBar
+                data={data.data.dados.grafico.map((dados: any) => ({
+                  day: dados.dia,
+                  horas: dados.horas
+                }))}
+                keys={[
+                  'horas',
+                ]}
+                indexBy="day"
+                margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+                padding={0.3}
+                valueScale={{ type: 'linear' }}
+                indexScale={{ type: 'band', round: true }}
+                colors={{ scheme: 'purple_blue' }}
+                colorBy="indexValue"
+                borderColor={{
+                  from: 'color',
+                  modifiers: [
+                    [
+                      'darker',
+                      1.6
+                    ]
+                  ]
+                }}
+                axisTop={null}
+                axisRight={null}
+                axisBottom={{
+                  tickSize: 5,
+                  tickPadding: 5,
+                  tickRotation: 0,
+                  legend: 'Dias',
+                  legendPosition: 'middle',
+                  legendOffset: 32
+                }}
+                axisLeft={{
+                  tickSize: 5,
+                  tickPadding: 5,
+                  tickRotation: 0,
+                  legend: '',
+                  legendPosition: 'middle',
+                  legendOffset: -40,
+                  format: e => `${Math.floor(e / 60)}h${e % 60}m`
+                }}
+                label={d => `${Math.floor(Number(d.value) / 60)}:${Number(d.value) % 60}`}
+                labelSkipWidth={12}
+                labelSkipHeight={12}
+                labelTextColor={{
+                  from: 'color',
+                  modifiers: [
+                    [
+                      'darker',
+                      1.6
+                    ]
+                  ]
+                }}
+                legends={[
+                  {
+                    dataFrom: 'keys',
+                    anchor: 'bottom-right',
+                    direction: 'column',
+                    justify: false,
+                    translateX: 120,
+                    translateY: 0,
+                    itemsSpacing: 2,
+                    itemWidth: 100,
+                    itemHeight: 20,
+                    itemDirection: 'left-to-right',
+                    itemOpacity: 0.85,
+                    symbolSize: 20,
+                    effects: [
+                      {
+                        on: 'hover',
+                        style: {
+                          itemOpacity: 1
+                        }
+                      }
+                    ]
+                  }
+                ]}
+                tooltip={e => (
+                  <>
+                    <div className="bg-white shadow-lg border border-gray-200 p-3 rounded">
+                      <p className="font-bold text-sky-950">{`Dia ${e.label.replace('horas ', '')}`}</p>
+                      <p className="">
+                        {e.value == 0 ? '0h' : `${Math.floor(e.value / 60)}h${e.value % 60}m`}
+                      </p>
+                    </div>
+                  </>
+                )}
+                role="application"
+                ariaLabel="Nivo bar chart demo"
+                barAriaLabel={e => e.id + ": " + e.formattedValue + " in country: " + e.indexValue}
+              />
             </div>
           </div>
         </>

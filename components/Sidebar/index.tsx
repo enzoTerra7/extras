@@ -13,7 +13,7 @@ import {
 import { classNames } from '@/utils/usualFunction'
 import { usePathname } from 'next/navigation'
 
-export function Sidebar({ children }: {
+export default function Sidebar({ children }: {
   children?: React.ReactNode
 }) {
 

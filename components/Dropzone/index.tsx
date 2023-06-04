@@ -21,11 +21,9 @@ export const Dropzone: React.FC<Props> = ({
 
       if(saveFile){
         saveFile(file)
-        console.log(file)
       }
       if(preview){
         preview(uri)
-        console.log(uri)
       }
     },
     [saveFile, preview]
