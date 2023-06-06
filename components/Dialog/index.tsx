@@ -6,7 +6,7 @@ import clsx from 'clsx'
 interface DialogProps {
   title: String
   subtitle: React.ReactNode
-  button: ButtonProps
+  button?: ButtonProps
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   withoutOutsideClick?: boolean
@@ -76,15 +76,17 @@ export default function Dialog(props: DialogProps) {
                 )}
 
                 <div className="mt-4 flex items-center gap-4">
-                  <Button
-                    {...props.button}
-                    onClick={() => {
-                      if (!props.disabledAutoClose) close()
-                      if (props.button.onClick) props.button.onClick()
-                    }}
-                  >
-                    {props.button.children}
-                  </Button>
+                  {props.button && (
+                    <Button
+                      {...props.button}
+                      onClick={() => {
+                        if (!props.disabledAutoClose) close()
+                        if (props?.button?.onClick) props.button.onClick()
+                      }}
+                    >
+                      {props.button.children}
+                    </Button>
+                  )}
                   {props.secondButton && (
                     <Button
                       {...props.secondButton}

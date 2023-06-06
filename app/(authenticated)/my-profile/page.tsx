@@ -139,8 +139,8 @@ export default function MyProfile() {
           </div>
         ) : (
           <div className="flex gap-4 md:gap-8 flex-wrap w-full items-center">
-            <div className="flex items-center p-4 flex-col gap-4 mx-auto transition-shadow duration-300 hover:rounded-lg hover:shadow-lg hover:border-gray-50 hover:border w-[280px] md:w-[320px]">
-              <img src={(!!!data?.data?.user?.imagem.length || isLoading) ? "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" : data.data.user.imagem} alt="Foto do seu usuário" className='w-full rounded-full object-cover' />
+            <div className="flex items-center p-4 flex-col gap-4 mx-auto transition-shadow duration-300 hover:rounded-lg hover:shadow-lg hover:border-gray-50 object-cover hover:border">
+              <img src={(!!!data?.data?.user?.imagem.length || isLoading) ? "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" : data.data.user.imagem} alt="Foto do seu usuário" className='rounded-full object-cover w-[280px] md:h-[320px] md:w-[320px]' />
               <Transition
                 show={editing}
                 enter="transition ease-out duration-300"
@@ -159,7 +159,7 @@ export default function MyProfile() {
                 </Button>
               </Transition>
             </div>
-            <div className="flex flex-1 p-4 gap-4 flex-col transition-shadow duration-300 hover:rounded-lg hover:border-gray-50 hover:border w-[280px] md:w-[unset]">
+            <div className="flex flex-1 p-4 gap-4 flex-col transition-shadow duration-300 w-[280px] md:w-[unset]">
               <Header
                 title={data.data.user.nome}
                 subtitle='Confira e edite seus dados'
@@ -234,7 +234,7 @@ export default function MyProfile() {
               </div>
             </div>
             <div className="hidden w-full md:flex flex-wrap items-center gap-4">
-              <div className="flex flex- items-center p-4 flex-col gap-4 transition-shadow duration-300 rounded-lg border-gray-150 border min-w-[260px] flex-1">
+              <div className="flex items-center p-4 flex-col gap-4 transition-shadow duration-300 rounded-lg hover:shadow-lg border-gray-150 border min-w-[260px] flex-1">
                 <h4 className="text-sky-950 font-semibold text-lg">
                   Valor da sua hora
                 </h4>
@@ -277,13 +277,13 @@ export default function MyProfile() {
           loading: sendingImage,
           onClick: () => fileToBase64(file as File, sendImage),
         } || undefined}
-        button={{
+        button={!sendingImage && {
           children: 'Cancelar',
           testId: 'cancelar',
           type: 'white',
           onClick: handleCloseModal,
           disabled: sendingImage
-        }}
+        } || undefined}
         withoutOutsideClick
         disabledAutoClose
         isOpen={modalOpen}
