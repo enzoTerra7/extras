@@ -18,7 +18,8 @@ const schema = yup.object({
   ConfirmarSenha: yup.string().oneOf([yup.ref('Senha')], 'As senhas precisam ser iguais').required("Por favor, preencha este campo."),
   Salario: yup.number().positive('O valor inserido deve ser no mínimo 1').required("Por favor, preencha este campo.").typeError('Por favor, preencha com um valor válido.'),
   HorasDia: yup.number().min(1, 'O valor inserido deve ser no mínimo 1').max(24, 'O valor inserido deve ser no máximo 24').required("Por favor, preencha este campo.").typeError('Por favor, preencha com um número válido.'),
-  DiasSemana: yup.number().min(1, 'O valor inserido deve ser no mínimo 1').max(7, 'O valor inserido deve ser no máximo 7').required("Por favor, preencha este campo.").typeError('Por favor, preencha com um número válido.')
+  DiasSemana: yup.number().min(1, 'O valor inserido deve ser no mínimo 1').max(7, 'O valor inserido deve ser no máximo 7').required("Por favor, preencha este campo.").typeError('Por favor, preencha com um número válido.'),
+  CargaHoraria: yup.number().min(1, 'O valor inserido deve ser no mínimo 1').typeError('Por favor, preencha com um número válido.')
 }).required()
 
 
@@ -134,6 +135,18 @@ export default function Register() {
           errorMessage={errors.DiasSemana?.message as string || ''}
         />
       </div>
+      <Input
+        id="cargaHoras"
+        label="Carga Horária Mensal (Opcional)"
+        type="number"
+        input={{
+          ...register('CargaHoraria'),
+          placeholder: "Insira sua carga horária",
+          min: 1
+        }}
+        error={!!errors.CargaHoraria}
+        errorMessage={errors.CargaHoraria?.message as string || ''}
+      />
       <Button
         testId="Cadastrar"
         className="mt-6"

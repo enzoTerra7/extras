@@ -25,7 +25,8 @@ export async function GET(req: NextRequest) {
         nome: true,
         email: true,
         valorHora: true,
-        imagem: true
+        imagem: true,
+        cargaHoraria: true
       }
     })
 
@@ -72,7 +73,8 @@ export async function PUT(req: NextRequest) {
         salario: body.Salario,
         horasDia: body.HorasDia,
         diasSemana: body.DiasSemana,
-        valorHora: body.Salario / ((body.HorasDia * body.DiasSemana) * 5),
+        valorHora: body?.CargaHoraria ? (body.Salario / body?.CargaHoraria) : (body.Salario / ((body.HorasDia * body.DiasSemana) * 5)),
+        cargaHoraria: body?.CargaHoraria ? body?.CargaHoraria : ((body.HorasDia * body.DiasSemana) * 5)
       }
     })
 

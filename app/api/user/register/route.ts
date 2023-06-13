@@ -16,7 +16,8 @@ export async function POST(req: NextRequest) {
         salario: body.Salario,
         horasDia: body.HorasDia,
         diasSemana: body.DiasSemana,
-        valorHora: body.Salario / ((body.HorasDia * body.DiasSemana) * 5)
+        valorHora: body?.CargaHoraria ? (body.Salario / body?.CargaHoraria) : (body.Salario / ((body.HorasDia * body.DiasSemana) * 5)),
+        cargaHoraria: body?.CargaHoraria ? body?.CargaHoraria : ((body.HorasDia * body.DiasSemana) * 5)
       }
     })
 

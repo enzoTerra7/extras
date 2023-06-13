@@ -93,10 +93,11 @@ function getMonthData(extras: Extras[], currentDay: boolean): { dia: string; hor
   }
 
   // Preencher as horas correspondentes para os dias com 'Extras'
+  console.log('extras', extras)
   for (const extra of extras) {
     const formattedDate = format(extra.diaReferente, 'dd/MM');
     const index = monthData.findIndex(e => e.dia === formattedDate)
-    monthData[index].horas = extra.horas;
+    monthData[index].horas += extra.horas;
   }
 
   return monthData;

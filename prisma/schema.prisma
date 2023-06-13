@@ -23,6 +23,7 @@ model User {
   totalGanho            Float  @default(0)
   totalHorasDescontadas Int    @default(0)
   totalHoras            Int    @default(0)
+  cargaHoraria          Int    @default(0)
 
   extras Extras[]
 }

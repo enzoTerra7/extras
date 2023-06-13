@@ -21,7 +21,8 @@ const schema = yup.object({
   Nome: yup.string().required("Por favor, preencha este campo").matches(/^(?=(?:.*[a-zA-ZÀ-ÖØ-öø-ÿ]){5})[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/, "O nome deve possuir pelo menos 5 letras. E não pode conter números ou símbolos."),
   Salario: yup.number().positive('O valor inserido deve ser no mínimo 1').required("Por favor, preencha este campo.").typeError('Por favor, preencha com um valor válido.'),
   HorasDia: yup.number().min(1, 'O valor inserido deve ser no mínimo 1').max(24, 'O valor inserido deve ser no máximo 24').required("Por favor, preencha este campo.").typeError('Por favor, preencha com um número válido.'),
-  DiasSemana: yup.number().min(1, 'O valor inserido deve ser no mínimo 1').max(7, 'O valor inserido deve ser no máximo 7').required("Por favor, preencha este campo.").typeError('Por favor, preencha com um número válido.')
+  DiasSemana: yup.number().min(1, 'O valor inserido deve ser no mínimo 1').max(7, 'O valor inserido deve ser no máximo 7').required("Por favor, preencha este campo.").typeError('Por favor, preencha com um número válido.'),
+  CargaHoraria: yup.number().min(1, 'O valor inserido deve ser no mínimo 1').typeError('Por favor, preencha com um número válido.')
 }).required()
 
 export default function MyProfile() {
@@ -92,6 +93,7 @@ export default function MyProfile() {
       setValue('Salario', data?.data?.user?.salario)
       setValue('HorasDia', data?.data?.user?.horasDia)
       setValue('DiasSemana', data?.data?.user?.diasSemana)
+      setValue('CargaHoraria', data?.data?.user?.cargaHoraria)
     }
   }, [isLoading, data])
 
@@ -232,6 +234,19 @@ export default function MyProfile() {
                   errorMessage={errors.DiasSemana?.message as string || ''}
                 />
               </div>
+                <Input
+                  id="cargaHoraria"
+                  type="number"
+                  label="Carga horária (Opcional)"
+                  input={{
+                    ...register('CargaHoraria'),
+                    placeholder: "Se preferir, insira sua carga horária",
+                    min: 1,
+                    disabled: !editing,
+                  }}
+                  error={!!errors.CargaHoraria}
+                  errorMessage={errors.CargaHoraria?.message as string || ''}
+                />
             </div>
             <div className="hidden w-full md:flex flex-wrap items-center gap-4">
               <div className="flex items-center p-4 flex-col gap-4 transition-shadow duration-300 rounded-lg hover:shadow-lg border-gray-150 border min-w-[260px] flex-1">

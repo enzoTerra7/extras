@@ -11,7 +11,7 @@ import api from '@/lib/api'
 
 export default function Navbar() {
 
-  const { data, isLoading } = useSWR<any, any, "/api/user/image">("/api/user/image", api, { refreshInterval: 20000 })
+  const { data } = useSWR<any, any, "/api/user/image">("/api/user/image", api, { refreshInterval: 20000,  })
 
   return (
     <div className="relative z-10 w-full flex-shrink-0 flex h-16 bg-white border-b border-gray-200 ">
@@ -24,7 +24,7 @@ export default function Navbar() {
               <Menu.Button className="max-w-xs bg-white rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 lg:p-2 lg:rounded-md lg:hover:bg-gray-50">
                 <img
                   className="h-8 w-8 rounded-full"
-                  src={(!!!data?.data?.imagem.length || isLoading) ? "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" : data.data.imagem}
+                  src={(!!!data?.data?.imagem.length) ? "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" : data.data.imagem}
                   alt="Foto de perfil do usuário"
                 />
                 <span className="hidden ml-3 text-gray-700 text-sm font-medium lg:block">
