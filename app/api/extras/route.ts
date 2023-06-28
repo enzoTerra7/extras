@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
     const extra = await prisma.extras.create({
       data: {
         horas: horasTotal,
-        valor: Number(((valorHora * 1.7) * ((horasTotal - horasTotalDescontado) / 60)).toFixed(2)),
+        valor: Number(((valorHora * 1.8) * ((horasTotal - horasTotalDescontado) / 60)).toFixed(2)),
         descontado: body.Descontado,
         diaReferente: body.Dia,
         descricao: body.Descricao,

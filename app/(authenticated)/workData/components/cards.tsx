@@ -23,7 +23,7 @@ export function WorkDataCards() {
             icon: <CurrencyDollarIcon className="w-6 h-6 text-white" />,
             id: 1,
             name: 'Valor da sua hora extra',
-            stat: formatCurrency(Number(data?.data?.user?.valorHora || 0) * 1.7)
+            stat: formatCurrency(Number(data?.data?.user?.valorHora || 0) * 1.8)
           },
           {
             icon: <ClockIcon className="w-6 h-6 text-white" />,
