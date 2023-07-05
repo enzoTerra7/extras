@@ -42,7 +42,7 @@ export async function PUT(req: NextRequest, props: any) {
       },
       data: {
         horas: horasTotal,
-        valor: Number(((valorHora * 1.8) * ((horasTotal - horasTotalDescontado) / 60)).toFixed(2)),
+        valor: Number(((valorHora * 1.7) * ((horasTotal - horasTotalDescontado) / 60)).toFixed(2)),
         descontado: body.Descontado,
         diaReferente: body.Dia,
         horasDescontas: horasTotalDescontado
